@@ -19,6 +19,10 @@ export type Mug = {
   storyIntro: string;
 };
 
+const basePath = "/coffeeStreet";
+
+const publicPath = (path: string) => `${basePath}${path}`;
+
 export const shops: Shop[] = [
   {
     id: "baobab-coffee",
@@ -27,7 +31,7 @@ export const shops: Shop[] = [
     address: "福岡県久留米市朝妻町13-28",
     lat: 33.3152,
     lng: 130.5000,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-001",
   },
   {
@@ -37,7 +41,7 @@ export const shops: Shop[] = [
     address: "京都市上京区寺町通丸太町上ル",
     lat: 35.0248,
     lng: 135.7683,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-002",
   },
   {
@@ -47,7 +51,7 @@ export const shops: Shop[] = [
     address: "東京都台東区蔵前4-5-6",
     lat: 35.7031,
     lng: 139.7937,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-003",
   },
   {
@@ -57,7 +61,7 @@ export const shops: Shop[] = [
     address: "大阪市中央区北浜2-7-8",
     lat: 34.6911,
     lng: 135.5117,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-004",
   },
   {
@@ -67,7 +71,7 @@ export const shops: Shop[] = [
     address: "京都市右京区嵯峨天龍寺芒ノ馬場町",
     lat: 35.0094,
     lng: 135.6753,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-005",
   },
   {
@@ -77,7 +81,7 @@ export const shops: Shop[] = [
     address: "神奈川県横浜市中区元町3-1",
     lat: 35.4437,
     lng: 139.6427,
-    description: "xxxx",
+    description: "ここに店舗の紹介を書く？",
     mugId: "mug-006",
   },
 ];
@@ -89,8 +93,8 @@ export const mugs: Mug[] = [
     shopId: "baobab-coffee",
     shopName: "Baobab Coffee",
     area: "福岡県・久留米市",
-    imageUrl: "/images/mugs/S__55730192_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730192_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
   {
     id: "mug-002",
@@ -98,8 +102,8 @@ export const mugs: Mug[] = [
     shopId: "seijaku",
     shopName: "喫茶 静寂",
     area: "京都・上長区",
-    imageUrl: "/images/mugs/S__55730195_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730195_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
   {
     id: "mug-003",
@@ -107,8 +111,8 @@ export const mugs: Mug[] = [
     shopId: "coffee-craft",
     shopName: "COFFEE & CRAFT",
     area: "東京・蔵前",
-    imageUrl: "/images/mugs/S__55730196_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730196_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
   {
     id: "mug-004",
@@ -116,8 +120,8 @@ export const mugs: Mug[] = [
     shopId: "morning-light",
     shopName: "朝光珈琲",
     area: "大阪・北浜",
-    imageUrl: "/images/mugs/S__55730197_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730197_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
   {
     id: "mug-005",
@@ -125,8 +129,8 @@ export const mugs: Mug[] = [
     shopId: "kiri-no-mori",
     shopName: "霧の森 珈琲",
     area: "京都・嵐山",
-    imageUrl: "/images/mugs/S__55730198_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730198_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
   {
     id: "mug-006",
@@ -134,7 +138,7 @@ export const mugs: Mug[] = [
     shopId: "harbor-blend",
     shopName: "ハーバー ブレンド",
     area: "横浜・元町",
-    imageUrl: "/images/mugs/S__55730199_0.jpg",
-    storyIntro: "xxxx",
+    imageUrl: publicPath("/images/mugs/S__55730199_0.jpg"),
+    storyIntro: "ここにマグカップの紹介を書く？",
   },
 ];

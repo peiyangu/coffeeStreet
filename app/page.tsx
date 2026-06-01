@@ -43,7 +43,7 @@ export default function HomePage() {
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
-            src="/hero.png"
+            src="/coffeeStreet/hero.png"
             alt="Coffee Street のヒーロー画像"
             fill
             priority
