@@ -1,0 +1,226 @@
+/* ===== Join Page ===== */
+
+/* Hero */
+.hero {
+  background-color: var(--color-coffee-dark);
+  padding: 6rem 1.5rem;
+  color: var(--color-off-white);
+  text-align: center;
+}
+
+.heroHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  margin-bottom: 0.75rem;
+}
+
+.heroBody {
+  font-size: 1rem;
+  color: #D4C5BC;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+/* Main section */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+}
+
+@media (min-width: 768px) {
+  .main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.colHeading {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--color-text-dark);
+  margin-bottom: 2rem;
+}
+
+/* Benefits */
+.benefitList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.benefitItem {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.benefitIcon {
+  color: var(--color-coffee-brown);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.benefitTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.benefitDesc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Flow */
+.flowList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.flowItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.flowNum {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-coffee-brown);
+  color: var(--color-coffee-brown);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.flowTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  padding-top: 0.3rem;
+}
+
+.flowDesc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Contact Form */
+.formSection {
+  border-top: 1px solid #E8E0D8;
+  padding: 5rem 1.5rem;
+}
+
+.formInner {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.formHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: var(--color-text-dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.formEmail {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .formRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--color-coffee-brown);
+  margin-bottom: 0.4rem;
+}
+
+.required {
+  color: #e07070;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid #E8E0D8;
+  background-color: white;
+  border-radius: 2px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: var(--font-sans);
+  box-sizing: border-box;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #C4B8AE;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-coffee-brown);
+}
+
+.textarea {
+  resize: none;
+  line-height: 1.7;
+}
+
+.submitWrap {
+  text-align: center;
+}
+
+.submitBtn {
+  padding: 0.9rem 3rem;
+  background-color: var(--color-coffee-dark);
+  color: var(--color-off-white);
+  font-size: 1rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: #5a2e25;
+}

@@ -1,0 +1,178 @@
+/* ===== Mug Detail Page ===== */
+.page {
+  background-color: #FAF7F4;
+  min-height: 100vh;
+}
+
+.backWrap {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 1rem;
+}
+
+.backLink {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--color-coffee-brown);
+}
+
+.inner {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 1;
+  background-color: #F0EBE1;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imageBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-coffee-brown);
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  padding: 0.3rem 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.info {
+  padding-top: 1rem;
+}
+
+.area {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+
+.shopName {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  color: var(--color-text-dark);
+  margin-bottom: 2rem;
+}
+
+.storyBlock {
+  border-left: 4px solid var(--color-coffee-brown);
+  padding-left: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.storyText {
+  font-size: 1.05rem;
+  color: var(--color-coffee-brown);
+  line-height: 1.85;
+}
+
+/* Card teaser */
+.cardTeaser {
+  background-color: #F5F0E8;
+  border: 1px solid #E8E0D8;
+  border-radius: 2px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cardTeaserIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--color-coffee-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTeaserHeading {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.cardTeaserBody {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+}
+
+/* Shop Info */
+.shopInfoSection {
+  border-top: 1px solid #E8E0D8;
+  padding-top: 1.5rem;
+}
+
+.shopInfoLabel {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.shopInfoName {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--color-text-dark);
+  margin-bottom: 0.35rem;
+}
+
+.shopInfoAddress {
+  font-size: 1rem;
+  color: var(--color-coffee-brown);
+  margin-bottom: 1.25rem;
+}
+
+.mapLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-coffee-brown);
+  border: 1px solid var(--color-coffee-brown);
+  padding: 0.5rem 1.25rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mapLink:hover {
+  background-color: var(--color-coffee-brown);
+  color: var(--color-off-white);
+}
