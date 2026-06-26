@@ -7,6 +7,7 @@ export type Shop = {
   lng: number;
   description: string;
   mugId: string;
+  instagram: string;
 };
 
 export type Mug = {
@@ -29,20 +30,22 @@ export const shops: Shop[] = [
     name: "Baobab Coffee",
     area: "福岡県・久留米市",
     address: "福岡県久留米市朝妻町13-28",
-    lat: 33.3152,
-    lng: 130.5000,
+    lat: 33.311106232156,
+    lng: 130.54658339836433,
     description: "ここに店舗の紹介を書く？",
     mugId: "mug-001",
+    instagram: "https://www.instagram.com/baobabcoffee_kurume/",
   },
   {
     id: "hiroshi-no-haco",
     name: "hirosHi.no.haco",
     area: "福岡県・筑紫野市",
     address: "福岡県筑紫野市原633-18",
-    lat: 33.4977,
-    lng: 130.5239,
+    lat: 33.517921403351,
+    lng: 130.54385306909384,
     description: "ここに店舗の紹介を書く？",
     mugId: "mug-002",
+    instagram: "https://www.instagram.com/hiroshi.no.haco_/",
   },
   {
     id: "hanjyo-coffee",
@@ -53,6 +56,7 @@ export const shops: Shop[] = [
     lng: 130.5138,
     description: "ここに店舗の紹介を書く？",
     mugId: "mug-003",
+    instagram: "https://www.instagram.com/hanjou_coffee/",
   },
   {
     id: "hoshikuzu-coffee",
@@ -63,6 +67,7 @@ export const shops: Shop[] = [
     lng: 130.2860,
     description: "ここに店舗の紹介を書く？",
     mugId: "mug-004",
+    instagram: "https://www.instagram.com/hoshikuzu_coffee_roastery/",
   },
 ];
 

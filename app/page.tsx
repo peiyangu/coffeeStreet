@@ -3,38 +3,19 @@ import Image from "next/image";
 import { mugs, shops } from "@/data";
 import { homeContent, siteConfig } from "@/data/content";
 import styles from "@/styles/Home.module.css";
+import { PinIcon, BookIcon, MugIcon, CupIcon } from "@/components/icons";
 
 const featuredMugs = mugs.slice(0, 3);
 
-const BookIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-  </svg>
-);
+// コンセプトセクション用の大きなアイコン（28px）
+const conceptIcons = [
+  <BookIcon key="book" size={28} />,
+  <CupIcon key="cup" size={28} />,
+  <PinIcon key="pin" size={28} strokeWidth={1.2} />,
+];
 
-const CupIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-    <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-  </svg>
-);
-
-const PinIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
-
-const SmallPinIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
-
-const conceptIcons = [<BookIcon key="book" />, <CupIcon key="cup" />, <PinIcon key="pin" />];
+// stats の各ラベルに対応するデータソース
+const statValues = { shops: shops.length, mugs: mugs.length };
 
 export default function HomePage() {
   return (
@@ -62,9 +43,9 @@ export default function HomePage() {
           </div>
 
           <div className={styles.heroStats}>
-            {homeContent.stats.map((stat, i) => (
+            {homeContent.stats.map((stat) => (
               <div key={stat.label}>
-                <p className={styles.statValue}>{i === 0 ? shops.length : mugs.length}</p>
+                <p className={styles.statValue}>{statValues[stat.dataKey]}</p>
                 <p className={styles.statLabel}>{stat.label}</p>
               </div>
             ))}
@@ -117,7 +98,7 @@ export default function HomePage() {
                 </div>
                 <div className={styles.mugCardBody}>
                   <p className={styles.mugCardName}>{mug.shopName}</p>
-                  <p className={styles.mugCardArea}><SmallPinIcon />{mug.area}</p>
+                  <p className={styles.mugCardArea}><PinIcon size={11} />{mug.area}</p>
                   <p className={styles.mugCardStory}>{mug.storyIntro}</p>
                   <p className={styles.mugCardCta}>{homeContent.featuredMugs.cardCta} →</p>
                 </div>

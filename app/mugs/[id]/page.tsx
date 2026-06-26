@@ -1,29 +1,16 @@
-﻿import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { mugs, shops } from "@/data";
 import { mugDetailContent } from "@/data/content";
 import styles from "@/styles/MugDetail.module.css";
+import { PinIcon, BookIcon, InstagramIcon } from "@/components/icons";
 
 type Props = { params: Promise<{ id: string }> };
 
 export async function generateStaticParams() {
   return mugs.map((mug) => ({ id: mug.id }));
 }
-
-const PinIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
-
-const BookIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FAF7F4" strokeWidth="1.5">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-  </svg>
-);
 
 export default async function MugDetailPage({ params }: Props) {
   const { id } = await params;
@@ -54,7 +41,9 @@ export default async function MugDetailPage({ params }: Props) {
             </div>
 
             <div className={styles.cardTeaser}>
-              <div className={styles.cardTeaserIcon}><BookIcon /></div>
+              <div className={styles.cardTeaserIcon}>
+                <BookIcon size={18} color="#FAF7F4" />
+              </div>
               <div>
                 <p className={styles.cardTeaserHeading}>{mugDetailContent.cardTeaser.heading}</p>
                 <p className={styles.cardTeaserBody}>{mugDetailContent.cardTeaser.body}</p>
@@ -66,10 +55,16 @@ export default async function MugDetailPage({ params }: Props) {
                 <p className={styles.shopInfoLabel}>{mugDetailContent.shopInfoLabel}</p>
                 <p className={styles.shopInfoName}>{shop.name}</p>
                 <p className={styles.shopInfoAddress}>{shop.address}</p>
-                <Link href={`/map?shop=${shop.id}`} className={styles.mapLink}>
-                  <PinIcon />
-                  {mugDetailContent.mapLink}
-                </Link>
+                <div className={styles.shopLinks}>
+                  <Link href={`/map?shop=${shop.id}`} className={styles.mapLink}>
+                    <PinIcon />
+                    {mugDetailContent.mapLink}
+                  </Link>
+                  <a href={shop.instagram} target="_blank" rel="noopener noreferrer" className={styles.instagramLink}>
+                    <InstagramIcon />
+                    {mugDetailContent.instagramLink}
+                  </a>
+                </div>
               </div>
             )}
           </div>
@@ -78,4 +73,3 @@ export default async function MugDetailPage({ params }: Props) {
     </div>
   );
 }
-

@@ -4,19 +4,69 @@ import { useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from "@react-google-maps/api";
 import Link from "next/link";
-import { shops, mugs } from "@/data";
+import { shops, mugs, type Shop, type Mug } from "@/data";
 import { mapContent } from "@/data/content";
 import styles from "@/styles/Map.module.css";
+import { PinIcon } from "@/components/icons";
 
-const PinIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
+function createCoffeePinUrl(isSelected: boolean): string {
+  const color = isSelected ? "#3d1f0a" : "#6B4226";
+  // 円弧を上半分2分割で描くことで確実に頭部を塗りつぶす
+  // 左端(8,22)→頂点(22,6)→右端(36,22) の2つのminor arc (sweep=1)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="60" viewBox="0 0 44 60">
+    <path d="M22 58 C16 47 6 38 6 22 A16 16 0 0 1 22 4 A16 16 0 0 1 38 22 C38 38 28 47 22 58Z" fill="white"/>
+    <path d="M22 55 C16 45 8 36 8 22 A14 14 0 0 1 22 6 A14 14 0 0 1 36 22 C36 36 28 45 22 55Z" fill="${color}"/>
+    <g transform="translate(14,8.4) scale(0.8)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+    </g>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 
 const DEFAULT_CENTER = { lat: 33.50, lng: 130.43 };
 const DEFAULT_ZOOM = 11;
+
+// InfoWindow は Google Maps の DOM 内に描画されるため CSS Modules が使えない
+const infoWindowStyle = {
+  container: { padding: "10px 12px 12px", maxWidth: "240px", fontFamily: "'Noto Sans JP', sans-serif" },
+  name: { fontWeight: 700, fontSize: "1rem", color: "#1a1008", marginBottom: "2px", lineHeight: 1.3 },
+  area: { fontSize: "0.75rem", color: "#999", marginBottom: "10px" },
+  divider: { borderTop: "1px solid #eee", marginBottom: "10px" },
+  addressRow: { display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "12px" },
+  addressText: { fontSize: "0.8rem", color: "#555", lineHeight: 1.5, margin: 0 } as const,
+  mugLink: { display: "block", textDecoration: "none" },
+  mugImage: { width: "100%", height: "160px", objectFit: "cover" as const, borderRadius: "4px", display: "block" },
+  mugLinkLabel: { fontSize: "0.75rem", color: "#6B4226", textAlign: "center" as const, marginTop: "6px" },
+};
+
+type ShopInfoWindowProps = { shop: Shop; mug: Mug | null | undefined; onClose: () => void };
+
+function ShopInfoWindow({ shop, mug, onClose }: ShopInfoWindowProps) {
+  return (
+    <InfoWindow position={{ lat: shop.lat, lng: shop.lng }} onCloseClick={onClose}>
+      <div style={infoWindowStyle.container}>
+        <p style={infoWindowStyle.name}>{shop.name}</p>
+        <p style={infoWindowStyle.area}>{shop.area}</p>
+        <div style={infoWindowStyle.divider} />
+        <div style={infoWindowStyle.addressRow}>
+          <PinIcon size={13} color="#888" />
+          <p style={infoWindowStyle.addressText}>{shop.address}</p>
+        </div>
+        {mug && (
+          <Link href={`/mugs/${shop.mugId}`} style={infoWindowStyle.mugLink}>
+            <img
+              src={mug.imageUrl}
+              alt={`${shop.name}のマグカップ`}
+              style={infoWindowStyle.mugImage}
+            />
+            <p style={infoWindowStyle.mugLinkLabel}>詳しく見る →</p>
+          </Link>
+        )}
+      </div>
+    </InfoWindow>
+  );
+}
 
 function MapContent() {
   const searchParams = useSearchParams();
@@ -32,16 +82,18 @@ function MapContent() {
   const selectedShop = shops.find((s) => s.id === selected);
   const selectedMug = selectedShop ? mugs.find((m) => m.id === selectedShop.mugId) : null;
 
+  const panToShop = useCallback((shop: Shop, map: google.maps.Map) => {
+    map.panTo({ lat: shop.lat, lng: shop.lng });
+    map.setZoom(16);
+  }, []);
+
   const onMapLoad = useCallback((map: google.maps.Map) => {
     setMapInstance(map);
     if (shopParam) {
       const shop = shops.find((s) => s.id === shopParam);
-      if (shop) {
-        map.panTo({ lat: shop.lat, lng: shop.lng });
-        map.setZoom(16);
-      }
+      if (shop) panToShop(shop, map);
     }
-  }, [shopParam]);
+  }, [shopParam, panToShop]);
 
   const handleReset = useCallback(() => {
     setSelected(null);
@@ -54,12 +106,9 @@ function MapContent() {
   const handleSelectShop = (shopId: string) => {
     const newId = shopId === selected ? null : shopId;
     setSelected(newId);
-    if (newId) {
+    if (newId && mapInstance) {
       const shop = shops.find((s) => s.id === newId);
-      if (shop && mapInstance) {
-        mapInstance.panTo({ lat: shop.lat, lng: shop.lng });
-        mapInstance.setZoom(16);
-      }
+      if (shop) panToShop(shop, mapInstance);
     } else if (mapInstance) {
       mapInstance.panTo(DEFAULT_CENTER);
       mapInstance.setZoom(DEFAULT_ZOOM);
@@ -117,44 +166,15 @@ function MapContent() {
                 key={shop.id}
                 position={{ lat: shop.lat, lng: shop.lng }}
                 onClick={() => handleSelectShop(shop.id)}
+                icon={{
+                  url: createCoffeePinUrl(selected === shop.id),
+                  scaledSize: new window.google.maps.Size(44, 60),
+                  anchor: new window.google.maps.Point(22, 58),
+                }}
               />
             ))}
             {selectedShop && (
-              <InfoWindow
-                position={{ lat: selectedShop.lat, lng: selectedShop.lng }}
-                onCloseClick={handleReset}
-              >
-                <div style={{ padding: "10px 12px 12px", maxWidth: "240px", fontFamily: "'Noto Sans JP', sans-serif" }}>
-                  <p style={{ fontWeight: 700, fontSize: "1rem", color: "#1a1008", marginBottom: "2px", lineHeight: 1.3 }}>
-                    {selectedShop.name}
-                  </p>
-                  <p style={{ fontSize: "0.75rem", color: "#999", marginBottom: "10px" }}>
-                    {selectedShop.area}
-                  </p>
-                  <div style={{ borderTop: "1px solid #eee", marginBottom: "10px" }} />
-                  <div style={{ display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "12px" }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2" style={{ flexShrink: 0, marginTop: "2px" }}>
-                      <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    <p style={{ fontSize: "0.8rem", color: "#555", lineHeight: 1.5, margin: 0 }}>
-                      {selectedShop.address}
-                    </p>
-                  </div>
-                  {selectedMug && (
-                    <Link href={`/mugs/${selectedShop.mugId}`} style={{ display: "block", textDecoration: "none" }}>
-                      <img
-                        src={selectedMug.imageUrl}
-                        alt={`${selectedShop.name}のマグカップ`}
-                        style={{ width: "100%", height: "160px", objectFit: "cover", borderRadius: "4px", display: "block" }}
-                      />
-                      <p style={{ fontSize: "0.75rem", color: "#6B4226", textAlign: "center", marginTop: "6px" }}>
-                        詳しく見る →
-                      </p>
-                    </Link>
-                  )}
-                </div>
-              </InfoWindow>
+              <ShopInfoWindow shop={selectedShop} mug={selectedMug} onClose={handleReset} />
             )}
           </GoogleMap>
         ) : (
