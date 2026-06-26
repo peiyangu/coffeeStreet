@@ -89,7 +89,12 @@ function MapContent() {
 
   const onMapLoad = useCallback((map: google.maps.Map) => {
     setMapInstance(map);
-    if (shopParam) {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      const bounds = new window.google.maps.LatLngBounds();
+      shops.forEach((s) => bounds.extend({ lat: s.lat, lng: s.lng }));
+      map.fitBounds(bounds, 40);
+    } else if (shopParam) {
       const shop = shops.find((s) => s.id === shopParam);
       if (shop) panToShop(shop, map);
     }
